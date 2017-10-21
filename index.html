@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>切割轮播图</title>
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <style>
+        html body,
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .view {
+            width: 560px;
+            height: 300px;
+            margin: 50px auto;
+            position: relative;
+        }
+        
+        ul {
+            list-style: none;
+            height: 100%;
+        }
+        
+        ul li {
+            position: relative;
+            float: left;
+            width: 112px;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: all 1s;
+        }
+        
+        span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        li span:first-child {
+            background-image: url('./images/1.jpg');
+            background-repeat: no-repeat;
+            transform: translateZ(150px);
+        }
+        
+        li span:nth-child(2) {
+            background-image: url('./images/2.jpg');
+            background-repeat: no-repeat;
+            transform: rotateX(90deg) translateZ(150px);
+        }
+        
+        li span:nth-child(3) {
+            background-image: url('./images/3.jpg');
+            background-repeat: no-repeat;
+            transform: rotateX(180deg) translateZ(150px);
+        }
+        
+        li span:nth-child(4) {
+            background-image: url('./images/4.jpg');
+            background-repeat: no-repeat;
+            transform: rotateX(270deg) translateZ(150px);
+        }
+        
+        li:nth-child(2) span {
+            background-position: -112px;
+        }
+        
+        li:nth-child(3) span {
+            background-position: -224px;
+        }
+        
+        li:nth-child(4) span {
+            background-position: -336px;
+        }
+        
+        li:nth-child(5) span {
+            background-position: -448px;
+        }
+        
+        /* 给每个li加上延迟效果 */
+        li:nth-child(2) {           
+            transition-delay: 0.25s;
+        }
+        
+        li:nth-child(3) {
+            transition-delay: 0.5s;
+        }
+        
+        li:nth-child(4) {
+            transition-delay: 0.75s;
+        }
+        
+        li:nth-child(5) {
+            transition-delay: 1s;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        .prev,
+        .next {
+            position: absolute;
+            top: 0;
+            font-size: 35px;
+            line-height: 300px;
+            opacity: 0;
+            transition: all 1s;
+        }
+        
+        .next {
+            right: 0px;
+        }
+        
+        .view:hover .prev,
+        .view:hover .next {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="view">
+        <ul>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+            <li>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </li>
+        </ul>
+        <a href="javascript:;" class="prev fa fa-chevron-left"></a>
+        <a href="javascript:;" class="next fa fa-chevron-right"></a>
+    </div>
+    <script>
+        var prev = document.querySelector('.prev');
+        var next = document.querySelector('.next');
+        var liArr = document.querySelectorAll('li');
+        var num = 0;
+
+        var isTransitionEnd = false;
+        //找到最后一个li
+        var lastLi = document.querySelector('li:last-child');
+        //监听最后一个li 过度结束
+        lastLi.addEventListener('webkitTransitionEnd', function (){
+            isTransitionEnd = false;
+        })
+
+        prev.onclick = function (){
+            
+            if(isTransitionEnd == true) return;
+                    isTransitionEnd = true;
+            num++;
+            for(var i=0;i<liArr.length;i++){
+                
+                liArr[i].style.transform = "rotateX("+num * 90+"deg)"; 
+            }         
+        }
+        next.onclick = function (){
+            
+            if(isTransitionEnd == true) return;
+                    isTransitionEnd = true;
+             num--;
+            for(var i=0;i<liArr.length;i++){
+                liArr[i].style.transform = "rotateX(" + num*90 +"deg)"; 
+            }
+        }
+    </script>
+</body>
+
+</html>
